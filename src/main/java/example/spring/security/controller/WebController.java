@@ -18,4 +18,8 @@ public class WebController {
         return Constants.PAGE_LOGIN;
     }
 
+    @RequestMapping(value = Constants.PATH_INDEX, method = RequestMethod.GET)
+    public String getIndex() {
+        return Constants.PAGE_INDEX;
+    }
 }
