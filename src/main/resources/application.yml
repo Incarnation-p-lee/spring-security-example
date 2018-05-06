@@ -1,0 +1,5 @@
+security:
+  user:
+    name: user
+    password: 233333
+    role: USER
