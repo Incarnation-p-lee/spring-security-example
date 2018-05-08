@@ -22,4 +22,5 @@ public class WebController {
     public String getIndex() {
         return Constants.PAGE_INDEX;
     }
+
 }
