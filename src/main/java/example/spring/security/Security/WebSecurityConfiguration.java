@@ -30,7 +30,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll();
 
-        http.logout().logoutSuccessUrl("/");
+        http.logout().logoutSuccessUrl(Constants.PATH_LOGIN);
     }
 
 //    @Override
