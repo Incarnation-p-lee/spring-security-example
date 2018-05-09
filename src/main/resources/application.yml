@@ -3,3 +3,6 @@ security:
     name: user
     password: 233333
     role: USER
+
+server:
+  port: 8999
