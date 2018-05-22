@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ import java.util.List;
 
 @Component
 public class WebAuthenticationProvider implements AuthenticationProvider {
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private UserDetailsService detailsService;
@@ -41,7 +45,11 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
         final UserDetails details = this.detailsService.loadUserByUsername(username);
 
         if (details == null) {
-            throw new UsernameNotFoundException("Invalid username/password");
+            throw new UsernameNotFoundException("No such of that username");
+        }
+
+        if (!encoder.matches(password, details.getPassword())) {
+            throw new AuthenticationCredentialsNotFoundException("No such of that username");
         }
 
         final UsernamePasswordAuthenticationToken token

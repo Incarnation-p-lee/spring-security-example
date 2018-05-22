@@ -2,10 +2,13 @@ package example.spring.security.Security;
 
 import example.spring.security.Constants;
 import lombok.SneakyThrows;
+import org.springframework.context.annotation.Bean;
 import org.springframework.lang.NonNull;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -38,4 +41,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //    public void configure(WebSecurity web) {
 //        web.ignoring().antMatchers("/resources/static/**");
 //    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

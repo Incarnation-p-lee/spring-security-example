@@ -18,9 +18,5 @@ public class Constants {
     public final static String PATH_HOME = "/home";
     public final static String PAGE_HOME = "home";
 
-    public final static String USERNAME_0 = "username-0";
-    public final static String USERNAME_1 = "username-1";
-
     public final static String ROLE_ADMIN = "ROLE_ADMIN";
-    public final static String ROLE_DBA = "ROLE_DBA";
 }
