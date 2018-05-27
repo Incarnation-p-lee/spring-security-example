@@ -15,9 +15,20 @@ public class Constants {
     public final static String PATH_INDEX = "/index";
     public final static String PAGE_INDEX = "index";
 
-    public final static String USERNAME_0 = "username-0";
-    public final static String USERNAME_1 = "username-1";
+    public final static String PATH_HOME = "/home";
+    public final static String PAGE_HOME = "home";
 
     public final static String ROLE_ADMIN = "ROLE_ADMIN";
-    public final static String ROLE_DBA = "ROLE_DBA";
 }
+
+/**
+ * UserDetailsService: obtain user identify information
+ * UserDetails:        save obtained user information
+ *                     default implementation -> org.springframework.security.core.userdetails.User
+ *
+ * AuthenticationManager covers all auth process, it defines many AuthenticationProvider. If no-related object
+ * specific by provider, it will use DaoAuthenticationProvider.
+ * The provider need UserDetailsService to obtain UserDetails.
+ *
+ * Authentication: the interface for hold user information.
+ */

@@ -9,18 +9,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class WebController {
 
     @RequestMapping(value = Constants.PATH_ROOT, method = RequestMethod.GET)
-    public String getHomePage() {
+    public String getRootPage() {
         return Constants.PAGE_ROOT;
     }
 
     @RequestMapping(value = Constants.PATH_LOGIN, method = RequestMethod.GET)
-    public String getLogin() {
+    public String getLoginPage() {
         return Constants.PAGE_LOGIN;
     }
 
     @RequestMapping(value = Constants.PATH_INDEX, method = RequestMethod.GET)
-    public String getIndex() {
+    public String getIndexPage() {
         return Constants.PAGE_INDEX;
     }
 
+    @RequestMapping(value = Constants.PATH_HOME, method = RequestMethod.GET)
+    public String getHomePage() {
+        return Constants.PAGE_HOME;
+    }
 }
