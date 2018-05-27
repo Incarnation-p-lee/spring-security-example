@@ -20,3 +20,15 @@ public class Constants {
 
     public final static String ROLE_ADMIN = "ROLE_ADMIN";
 }
+
+/**
+ * UserDetailsService: obtain user identify information
+ * UserDetails:        save obtained user information
+ *                     default implementation -> org.springframework.security.core.userdetails.User
+ *
+ * AuthenticationManager covers all auth process, it defines many AuthenticationProvider. If no-related object
+ * specific by provider, it will use DaoAuthenticationProvider.
+ * The provider need UserDetailsService to obtain UserDetails.
+ *
+ * Authentication: the interface for hold user information.
+ */

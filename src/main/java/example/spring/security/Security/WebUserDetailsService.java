@@ -2,6 +2,8 @@ package example.spring.security.Security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import example.spring.security.Constants;
+import lombok.Cleanup;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -13,7 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +27,10 @@ import java.util.List;
  */
 
 @Service
+@NoArgsConstructor
 public class WebUserDetailsService implements UserDetailsService {
 
-    private static final String PASSWORD_JSON_FILE = "userPassword.json";
+    private static final String PASSWORD_JSON_FILE = "/password.json";
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private WebUserPassword userPassword;
 
@@ -37,7 +40,8 @@ public class WebUserDetailsService implements UserDetailsService {
     @SneakyThrows
     private WebUserPassword getWebUserPassword() {
         if (this.userPassword == null) {
-            this.userPassword = MAPPER.readValue(new File(PASSWORD_JSON_FILE), WebUserPassword.class);
+            @Cleanup final InputStream stream = this.getClass().getResourceAsStream(PASSWORD_JSON_FILE);
+            this.userPassword = MAPPER.readValue(stream, WebUserPassword.class);
         }
 
         return this.userPassword;
