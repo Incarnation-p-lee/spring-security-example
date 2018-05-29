@@ -1,16 +1,17 @@
 package example.spring.security.Security;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class WebUserPassword {
 
-    private Map<String, String> map = new HashMap<>();
+    private String username;
+
+    private String password;
 }

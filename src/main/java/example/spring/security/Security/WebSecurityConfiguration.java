@@ -39,7 +39,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/vendor/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-//                .formLogin().defaultSuccessUrl(Constants.PATH_INDEX).permitAll()
                 .formLogin().loginPage(Constants.PATH_LOGIN).defaultSuccessUrl(Constants.PATH_INDEX).permitAll()
                 .and()
                 .logout().permitAll();

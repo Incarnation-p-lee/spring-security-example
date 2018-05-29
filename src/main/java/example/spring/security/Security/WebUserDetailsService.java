@@ -5,17 +5,16 @@ import example.spring.security.Constants;
 import lombok.Cleanup;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,36 +29,40 @@ import java.util.List;
 @NoArgsConstructor
 public class WebUserDetailsService implements UserDetailsService {
 
-    private static final String PASSWORD_JSON_FILE = "/password.json";
+    private static final String PASSWORD_JSON_FILE = "password.data";
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    private WebUserPassword userPassword;
-
-    @Autowired
-    private PasswordEncoder encoder;
 
     @SneakyThrows
-    private WebUserPassword getWebUserPassword() {
-        if (this.userPassword == null) {
-            @Cleanup final InputStream stream = this.getClass().getResourceAsStream(PASSWORD_JSON_FILE);
-            this.userPassword = MAPPER.readValue(stream, WebUserPassword.class);
+    private WebUserPassword findWebUserPassword(@NonNull String username) {
+        final String path = this.getClass().getClassLoader().getResource(PASSWORD_JSON_FILE).getFile();
+        @Cleanup final BufferedReader reader = new BufferedReader(new FileReader(path));
+
+        String record;
+        WebUserPassword userPassword;
+
+        while ((record = reader.readLine()) != null) {
+            userPassword = MAPPER.readValue(record, WebUserPassword.class);
+
+            if (userPassword.getUsername().equals(username)) {
+                return userPassword;
+            }
         }
 
-        return this.userPassword;
+        return null;
     }
 
     @Override
     @SneakyThrows
     public UserDetails loadUserByUsername(@NonNull String username) {
         final List<GrantedAuthority> roles = new ArrayList<>();
-        final WebUserPassword webUserPassword = this.getWebUserPassword();
-        final String password = webUserPassword.getMap().get(username);
+        final WebUserPassword userPassword = this.findWebUserPassword(username);
 
-        if (password == null) {
+        if (userPassword == null) {
             return null;
         }
 
         roles.add(new SimpleGrantedAuthority(Constants.ROLE_ADMIN));
 
-        return new User(username, password, roles);
+        return new User(username, userPassword.getPassword(), roles);
     }
 }
