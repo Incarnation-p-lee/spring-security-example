@@ -53,7 +53,7 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
         }
 
         final UsernamePasswordAuthenticationToken token
-                = new UsernamePasswordAuthenticationToken(username, password, roles);
+                = new UsernamePasswordAuthenticationToken(username, "", roles);
         token.setDetails(details);
 
         return token;
