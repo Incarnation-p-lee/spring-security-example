@@ -4,8 +4,8 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.lang.NonNull;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -49,7 +49,7 @@ public class WebAuthenticationProvider implements AuthenticationProvider {
         }
 
         if (!encoder.matches(password, details.getPassword())) {
-            throw new AuthenticationCredentialsNotFoundException("No such of that username");
+            throw new BadCredentialsException("Bad credential detected");
         }
 
         final UsernamePasswordAuthenticationToken token

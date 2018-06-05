@@ -31,4 +31,8 @@ public class Constants {
  * The provider need UserDetailsService to obtain UserDetails.
  *
  * Authentication: the interface for hold user information.
+ * User defined filter: obtain authentication information from user, like username, password.
+ *                      then do filter to verify, fill SecurityContextHolder Authentication field.
+ *
+ * AccessDecisionManager: for manager resources specified. The FilterSecurityInterceptor will invoke that MANAGER.
  */
